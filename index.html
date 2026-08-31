@@ -1,7 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexión Wi-Fi Instantánea</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 { font-size: 24px; margin-bottom: 10px; }
+        p { font-size: 14px; color: #86868b; margin-bottom: 25px; }
+        .btn {
+            display: inline-block;
+            background-color: #0071e3;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .qr-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f5f5f7;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        img { display: block; margin: 0 auto; }
+    </style>
+</head>
 <body>
-    <h1>Prueba de Wi-Fi</h1>
-    <a href="conectar-wifi.mobileconfig">Conectarse al Wi-Fi (iPhone)</a>
+
+<div class="container">
+    <h1>Conectarse al Wi-Fi</h1>
+    <p>Escanea el código QR o usa el asistente para ingresar a la red sin escribir la contraseña.</p>
+
+    <!-- Opción 1: Botón para descargar el perfil en iPhone -->
+    <a href="conectar-wifi.mobileconfig" class="btn">Instalar Perfil (iPhone)</a>
+
+    <div style="margin: 15px 0; color: #86868b; font-weight: bold;">— O BIEN —</div>
+
+    <!-- Opción 2: Código QR Automático -->
+    <div class="qr-container">
+        <div id="qrcode"></div>
+        <p style="margin: 10px 0 0 0; font-size: 12px; font-weight: bold; color: #1d1d1f;">
+            Apunta con tu cámara aquí
+        </p>
+    </div>
+</div>
+
+<script>
+    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI
+    const SSID = "SIN INTERNET";
+    const PASSWORD = "Laagencia1782";
+    const ENCRYPTION = "WPA"; // Cambiar a WEP si tu red es antigua, o dejar vacío "" si no tiene contraseña
+
+    // 2. Generación del formato universal de Wi-Fi para códigos QR
+    // Estructura oficial: WIFI:S:nombre_red;T:WPA;P:contraseña;;
+    const qrData = `WIFI:S:${encodeURIComponent(SSID)};T:${ENCRYPTION};P:${encodeURIComponent(PASSWORD)};;`;
+
+    // 3. Crear la imagen del QR usando la API gratuita de QR Server
+    const qrContainer = document.getElementById("qrcode");
+    const img = document.createElement("img");
+    img.src = `https://qrserver.com{encodeURIComponent(qrData)}`;
+    img.alt = "Código QR de Wi-Fi";
+    qrContainer.appendChild(img);
+</script>
+
 </body>
 </html>
