@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conexión Wi-Fi Instantánea</title>
+    <title>Conexión Wi-Fi Privada (Estilo QiFi)</title>
+    <!-- Importamos la librería de renderizado local (Estilo QiFi) -->
+    <script src="https://cloudflare.com"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -39,21 +41,22 @@
             border-radius: 12px;
             display: inline-block;
         }
-        img { display: block; margin: 0 auto; }
+        /* Centrar el QR generado internamente */
+        #qrcode img { display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Conectarse al Wi-Fi</h1>
-    <p>Escanea el código QR o usa el asistente para ingresar a la red sin escribir la contraseña.</p>
+    <p>Escanea el código QR con tu cámara o descarga el asistente si estás en iPhone.</p>
 
-    <!-- Opción 1: Botón para descargar el perfil en iPhone -->
+    <!-- Opción para iPhone en pantalla completa -->
     <a href="conectar-wifi.mobileconfig" class="btn">Instalar Perfil (iPhone)</a>
 
     <div style="margin: 15px 0; color: #86868b; font-weight: bold;">— O BIEN —</div>
 
-    <!-- Opción 2: Código QR Automático -->
+    <!-- Contenedor del código QR generado de forma local -->
     <div class="qr-container">
         <div id="qrcode"></div>
         <p style="margin: 10px 0 0 0; font-size: 12px; font-weight: bold; color: #1d1d1f;">
@@ -63,22 +66,25 @@
 </div>
 
 <script>
-    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI
+    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI (Al igual que en QiFi)
     const SSID = "SIN INTERNET";
     const PASSWORD = "Laagencia1782";
-    const ENCRYPTION = "WPA"; // Cambiar a WEP si tu red es antigua, o dejar vacío "" si no tiene contraseña
+    const ENCRYPTION = "WPA"; // Deja WPA (es el estándar moderno)
 
-    // 2. Generación del formato universal de Wi-Fi para códigos QR
-    // Estructura oficial: WIFI:S:nombre_red;T:WPA;P:contraseña;;
-    const qrData = `WIFI:S:${encodeURIComponent(SSID)};T:${ENCRYPTION};P:${encodeURIComponent(PASSWORD)};;`;
+    // 2. Estructura la cadena de texto universal para configuraciones Wi-Fi
+    const qrData = `WIFI:S:${SSID};T:${ENCRYPTION};P:${PASSWORD};;`;
 
-    // 3. Crear la imagen del QR usando la API gratuita de QR Server
-    const qrContainer = document.getElementById("qrcode");
-    const img = document.createElement("img");
-    img.src = `https://qrserver.com{encodeURIComponent(qrData)}`;
-    img.alt = "Código QR de Wi-Fi";
-    qrContainer.appendChild(img);
+    // 3. Renderizado local (El navegador dibuja los píxeles sin enviarlos a internet)
+    new QRCode(document.getElementById("qrcode"), {
+        text: qrData,
+        width: 200,
+        height: 200,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
 </script>
 
 </body>
 </html>
+
