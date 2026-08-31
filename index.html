@@ -3,88 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conexión Wi-Fi Privada (Estilo QiFi)</title>
-    <!-- Importamos la librería de renderizado local (Estilo QiFi) -->
+    <title>Wi-Fi Card</title>
+    <!-- Motor de generación local de códigos QR (Privado y seguro) -->
     <script src="https://cloudflare.com"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        h1 { font-size: 24px; margin-bottom: 10px; }
-        p { font-size: 14px; color: #86868b; margin-bottom: 25px; }
-        .btn {
-            display: inline-block;
-            background-color: #0071e3;
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-        .qr-container {
-            margin-top: 20px;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
-            background: #f5f5f7;
-            border-radius: 12px;
-            display: inline-block;
+            box-sizing: border-box;
         }
-        /* Centrar el QR generado internamente */
-        #qrcode img { display: block; margin: 0 auto; }
+        /* Contenedor estilo tarjeta minimalista de wificard.io */
+        .wifi-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .card-header {
+            background: #1d1d1f;
+            color: #ffffff;
+            padding: 20px;
+        }
+        .card-header h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .card-body {
+            padding: 30px 24px;
+        }
+        .network-info {
+            margin-bottom: 25px;
+            text-align: left;
+            background: #f5f5f7;
+            padding: 14px 18px;
+            border-radius: 14px;
+        }
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #86868b;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .info-value {
+            font-size: 16px;
+            color: #1d1d1f;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .qr-wrapper {
+            display: inline-block;
+            padding: 16px;
+            background: #ffffff;
+            border: 2px solid #f5f5f7;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+        #qrcode img {
+            display: block;
+            margin: 0 auto;
+        }
+        .instructions {
+            font-size: 13px;
+            color: #515154;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        .apple-btn {
+            display: block;
+            background-color: #0071e3;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .apple-btn:hover {
+            background-color: #0077ed;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Conectarse al Wi-Fi</h1>
-    <p>Escanea el código QR con tu cámara o descarga el asistente si estás en iPhone.</p>
+<div class="wifi-card">
+    <div class="card-header">
+        <h1>Wi-Fi Connect</h1>
+    </div>
+    
+    <div class="card-body">
+        <!-- Información visual de la Red -->
+        <div class="network-info">
+            <div class="info-label">Red / SSID</div>
+            <div class="info-value" id="network-name">Cargando...</div>
+        </div>
 
-    <!-- Opción para iPhone en pantalla completa -->
-    <a href="conectar-wifi.mobileconfig" class="btn">Instalar Perfil (iPhone)</a>
+        <!-- Código QR -->
+        <div class="qr-wrapper">
+            <div id="qrcode"></div>
+        </div>
 
-    <div style="margin: 15px 0; color: #86868b; font-weight: bold;">— O BIEN —</div>
-
-    <!-- Contenedor del código QR generado de forma local -->
-    <div class="qr-container">
-        <div id="qrcode"></div>
-        <p style="margin: 10px 0 0 0; font-size: 12px; font-weight: bold; color: #1d1d1f;">
-            Apunta con tu cámara aquí
+        <p class="instructions">
+            Apunta con la cámara de tu teléfono al código QR para conectarte de forma automática.
         </p>
+
+        <!-- Botón alternativo para iPhone si abren la web en el móvil -->
+        <a href="conectar-wifi.mobileconfig" class="apple-btn">
+            Configurar en iPhone (Asistente)
+        </a>
     </div>
 </div>
 
 <script>
-    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI (Al igual que en QiFi)
+    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI
     const SSID = "SIN INTERNET";
     const PASSWORD = "Laagencia1782";
-    const ENCRYPTION = "WPA"; // Deja WPA (es el estándar moderno)
+    const ENCRYPTION = "WPA"; 
 
-    // 2. Estructura la cadena de texto universal para configuraciones Wi-Fi
+    // Muestra el nombre de la red de forma dinámica en la tarjeta
+    document.getElementById("network-name").textContent = SSID;
+
+    // 2. Estructura de la cadena de datos universal de Wi-Fi
     const qrData = `WIFI:S:${SSID};T:${ENCRYPTION};P:${PASSWORD};;`;
 
-    // 3. Renderizado local (El navegador dibuja los píxeles sin enviarlos a internet)
+    // 3. Renderiza el QR localmente
     new QRCode(document.getElementById("qrcode"), {
         text: qrData,
-        width: 200,
-        height: 200,
+        width: 180,
+        height: 180,
         colorDark : "#000000",
         colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        correctLevel : QRCode.CorrectLevel.M
     });
 </script>
 
 </body>
 </html>
-
