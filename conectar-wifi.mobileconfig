@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>SIN INTERNET</key>
+            <false/>
+            <key>EncryptionType</key>
+            <string>WPA</string>
+            <key>Password</key>
+            <string>Laagencia1782</string>
+            <key>SSID_STR</key>
+            <string>SIN INTERNET</string>
+            <key>PayloadDescription</key>
+            <string>Configura los ajustes de la red Wi-Fi automaticamente.</string>
+            <key>PayloadDisplayName</key>
+            <string>Wi-Fi Automatico</string>
+            <key>PayloadIdentifier</key>
+            <string>com.wifi.config.setup</string>
+            <key>PayloadType</key>
+            <string>com.apple.wifi.managed</string>
+            <key>PayloadUUID</key>
+            <string>12345678-ABCD-EF01-2345-6789ABCDEF01</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>Instalador de Wi-Fi</string>
+    <key>PayloadIdentifier</key>
+    <string>com.wifi.profile.root</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>87654321-DCBA-10FE-5432-10FEDCBA9876</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
