@@ -3,152 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wi-Fi Card</title>
-    <!-- Motor de generación local de códigos QR (Privado y seguro) -->
-    <script src="https://cloudflare.com"></script>
+    <title>Menú Gourmet | Alma de la Tierra - Eco Resort</title>
     <style>
+        :root {
+            --bg-color: #f3f9f8;        /* Fondo sutil menta pálido */
+            --primary: #5cb3a9;         /* Turquesa pastel orgánico */
+            --secondary: #a3d9cf;       /* Verde menta suave */
+            --dark: #22423d;            /* Verde bosque profundo para textos legibles */
+            --accent: #d8efe9;          /* Resaltados */
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #e0eafc, #cfdef3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--dark);
             margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 0;
+            line-height: 1.6;
         }
-        /* Contenedor estilo tarjeta minimalista de wificard.io */
-        .wifi-card {
+
+        /* Contenedor principal estilo carta física digital */
+        .menu-container {
+            max-width: 600px;
+            margin: 0 auto;
             background: #ffffff;
-            width: 100%;
-            max-width: 360px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(92, 179, 169, 0.08);
+            box-sizing: border-box;
+            padding-bottom: 60px;
+        }
+
+        /* Encabezado del Eco-Hotel */
+        .header {
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, var(--accent) 0%, #ffffff 100%);
+            padding: 50px 20px 30px 20px;
+            border-bottom: 1px dashed var(--secondary);
         }
-        .card-header {
-            background: #1d1d1f;
-            color: #ffffff;
-            padding: 20px;
-        }
-        .card-header h1 {
-            font-size: 20px;
-            margin: 0;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-        .card-body {
-            padding: 30px 24px;
-        }
-        .network-info {
-            margin-bottom: 25px;
-            text-align: left;
-            background: #f5f5f7;
-            padding: 14px 18px;
-            border-radius: 14px;
-        }
-        .info-label {
+
+        .hotel-tag {
             font-size: 11px;
             text-transform: uppercase;
-            color: #86868b;
+            letter-spacing: 3px;
+            color: var(--primary);
             font-weight: 700;
-            margin-bottom: 2px;
+            margin-bottom: 8px;
         }
-        .info-value {
-            font-size: 16px;
-            color: #1d1d1f;
-            font-weight: 600;
-            word-break: break-all;
+
+        .hotel-name {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            font-style: italic;
+            margin: 0 0 10px 0;
+            font-weight: 400;
         }
-        .qr-wrapper {
+
+        .badge-eco {
             display: inline-block;
-            padding: 16px;
-            background: #ffffff;
-            border: 2px solid #f5f5f7;
-            border-radius: 18px;
+            background-color: var(--accent);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Secciones del menú */
+        .menu-section {
+            padding: 40px 30px 10px 30px;
+        }
+
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            text-align: center;
+            color: var(--primary);
             margin-bottom: 25px;
+            position: relative;
+            letter-spacing: 1px;
         }
-        #qrcode img {
+
+        /* Líneas decorativas elegantes a los lados del título */
+        .section-title::after {
+            content: "";
             display: block;
-            margin: 0 auto;
+            width: 40px;
+            height: 1px;
+            background-color: var(--secondary);
+            margin: 8px auto 0 auto;
         }
-        .instructions {
-            font-size: 13px;
-            color: #515154;
-            line-height: 1.4;
-            margin-bottom: 20px;
+
+        /* Estructura de cada plato */
+        .menu-item {
+            margin-bottom: 30px;
         }
-        .apple-btn {
-            display: block;
-            background-color: #0071e3;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 14px;
+
+        .item-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             font-weight: 600;
-            transition: background 0.2s;
+            font-size: 16px;
         }
-        .apple-btn:hover {
-            background-color: #0077ed;
+
+        .item-title {
+            margin: 0;
+            padding-right: 15px;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-family: Georgia, serif;
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: #5d7571;
+            margin: 4px 0 0 0;
+            font-weight: 400;
+        }
+
+        /* Etiquetas dietéticas */
+        .diet {
+            font-size: 10px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 5px;
+        }
+
+        /* Pie de página con filosofía del hotel */
+        .footer {
+            text-align: center;
+            padding: 30px 40px;
+            background-color: #fafdfd;
+            border-top: 1px solid var(--accent);
+            margin-top: 20px;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #799792;
+            margin: 0;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-<div class="wifi-card">
-    <div class="card-header">
-        <h1>Wi-Fi Connect</h1>
-    </div>
+<div class="menu-container">
     
-    <div class="card-body">
-        <!-- Información visual de la Red -->
-        <div class="network-info">
-            <div class="info-label">Red / SSID</div>
-            <div class="info-value" id="network-name">Cargando...</div>
-        </div>
-
-        <!-- Código QR -->
-        <div class="qr-wrapper">
-            <div id="qrcode"></div>
-        </div>
-
-        <p class="instructions">
-            Apunta con la cámara de tu teléfono al código QR para conectarte de forma automática.
-        </p>
-
-        <!-- Botón alternativo para iPhone si abren la web en el móvil -->
-        <a href="conectar-wifi.mobileconfig" class="apple-btn">
-            Configurar en iPhone (Asistente)
-        </a>
+    <!-- Encabezado -->
+    <div class="header">
+        <div class="hotel-tag">Experiencia Gastronómica</div>
+        <h1 class="hotel-name">Alma de la Tierra</h1>
+        <div class="badge-eco">🌿 100% Orgánico & Kilómetro Cero</div>
     </div>
+
+    <!-- Sección 1: Entradas -->
+    <div class="menu-section">
+        <h2 class="section-title">Primeros Pasos</h2>
+        
+        <div class="menu-item">
+            <div class="item-main">
+                <span class="item-title">Tartar del Huerto <span class="diet">[ Vegano ]</span></span>
+                <span class="item-price">$18</span>
+            </div>
+            <p class="item-description">Aguacate local, mango biche infusionado en menta salvaje, rocío de limón mandarino y crocante de quinua real.</p>
+        </div>
+
+        <div class="menu-item">
+            <div class="item-main">
+                <span class="item-title">Sopa Fría de Albahaca & Turquesa</span>
+                <span class="item-price">$16</span>
+            </div>
+            <p class="item-description">Crema aterciopelada de almendras y albahaca orgánica, decorada con flores comestibles de nuestro invernadero.</p>
+        </div>
+    </div>
+
+    <!-- Sección 2: Fuertes -->
+    <div class="menu-section">
+        <h2 class="section-title">De la Tierra y el Agua</h2>
+        
+        <div class="menu-item">
+            <div class="item-main">
+                <span class="item-title">Pesca Artesanal Sostenible</span>
+                <span class="item-price">$34</span>
+            </div>
+            <p class="item-description">Filete sellado al hierro, emulsión de coco y limoncillo, acompañado de brotes tiernos y vegetales mini glaseados.</p>
+        </div>
+
+        <div class="menu-item">
+            <div class="item-main">
+                <span class="item-title">Risotto de Hongos del Bosque <span class="diet">[ GF ]</span></span>
+                <span class="item-price">$29</span>
+            </div>
+            <p class="item-description">Arroz arborio cremoso con variedad de setas recolectadas a mano en la reserva, perfumado con aceite de trufa blanca.</p>
+        </div>
+    </div>
+
+    <!-- Sección 3: Postres -->
+    <div class="menu-section">
+        <h2 class="section-title">Finales Dulces</h2>
+        
+        <div class="menu-item">
+            <div class="item-main">
+                <span class="item-title">Esfera de Menta & Cacao Néctar</span>
+                <span class="item-price">$14</span>
+            </div>
+            <p class="item-description">Chocolate amargo al 75% relleno de mousse ligera de menta fresca y centro líquido de frutos del bosque.</p>
+        </div>
+    </div>
+
+    <!-- Filosofía -->
+    <div class="footer">
+        <p>"Nuestra cocina respeta los ciclos de la naturaleza. Cada ingrediente ha sido cultivado de forma regenerativa a menos de 5 kilómetros de su mesa."</p>
+    </div>
+
 </div>
-
-<script>
-    // 1. CONFIGURA AQUÍ LOS DATOS DE TU RED WI-FI
-    const SSID = "SIN INTERNET";
-    const PASSWORD = "Laagencia1782";
-    const ENCRYPTION = "WPA"; 
-
-    // Muestra el nombre de la red de forma dinámica en la tarjeta
-    document.getElementById("network-name").textContent = SSID;
-
-    // 2. Estructura de la cadena de datos universal de Wi-Fi
-    const qrData = `WIFI:S:${SSID};T:${ENCRYPTION};P:${PASSWORD};;`;
-
-    // 3. Renderiza el QR localmente
-    new QRCode(document.getElementById("qrcode"), {
-        text: qrData,
-        width: 180,
-        height: 180,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.M
-    });
-</script>
 
 </body>
 </html>
